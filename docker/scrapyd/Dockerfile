@@ -17,8 +17,7 @@ RUN apt-get update && apt-get install -y git
 RUN pip install -U git+https://github.com/scrapy/scrapyd.git
 
 # copy the content of the local src directory to the working directory
-COPY Scrapy /src
-COPY run.sh /src
+# COPY run.sh /src
 
 # command to run on container start
 EXPOSE 6800

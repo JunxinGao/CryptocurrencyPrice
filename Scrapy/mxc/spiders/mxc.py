@@ -12,13 +12,13 @@ class MxcSpider(scrapy.Spider):
     url = 'https://www.mxc.com/open/api/v2/market/ticker'
 
     def start_requests(self):
-        self.logger.info("start request: {self.url}")
+        self.logger.info(f"start request: {self.url}")
         yield scrapy.Request(
             self.url,
             method='GET',
             callback=self.parse
         )
-        self.logger.info("end request: {self.url}")
+        self.logger.info(f"end request: {self.url}")
 
     def parse(self, response):
         body = json.loads(response.body.decode())

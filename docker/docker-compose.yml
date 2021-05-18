@@ -13,6 +13,7 @@ services:
       - ${SCRAPYD_DBS_DIR}:/root/dbs:rw
       - ${SCRAPYD_ITEMS_DIR}:/root/items:rw
       - ${SCRAPYD_CONFIG}:/etc/scrapyd/scrapyd.conf:rw
+      - ../Scrapy:/src:rw
     ports:
       - "${SCRAPYD_HOST_PORT}:6800"
     networks:
@@ -21,9 +22,10 @@ services:
       MONGO_INITDB_ROOT_USERNAME: "${MONGODB_INITDB_ROOT_USERNAME}"
       MONGO_INITDB_ROOT_PASSWORD: "${MONGODB_INITDB_ROOT_PASSWORD}"
       MONGO_INITDB_ROOT_HOST: "${MONGO_INITDB_ROOT_HOST}"
+      MONGO_INITDB_ROOT_PORT: "${MONGO_INITDB_ROOT_PORT}"
       #depends_on:
       #- mongodb
-    command: run.sh
+    command: -c scrapyd & logparser
 
   scrapydweb:
     build:

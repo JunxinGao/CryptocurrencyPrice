@@ -14,20 +14,17 @@ from urllib import parse
 USER_ENV = 'MONGO_INITDB_ROOT_USERNAME'
 PW_ENV = 'MONGO_INITDB_ROOT_PASSWORD'
 HOST_ENV = 'MONGO_INITDB_ROOT_HOST'
+PORT_ENV = 'MONGO_INITDB_ROOT_PORT'
 PROD_ENV = 'PROD_ENV'
 DB_NAME = 'mxc'
 TB_MARKET_TICKERS = 'market_tickers'
 
 # conf
-if os.environ.get(PROD_ENV):
-    u = parse.quote_plus(os.environ.get(USER_ENV))
-    p = parse.quote_plus(os.environ.get(PW_ENV))
-    host = parse.quote_plus(os.environ.get(HOST_ENV))
-    db_url = f'mongodb://{u}:{p}@{host}:27017/'
-else:
-    u = parse.quote_plus(DB_NAME)
-    p = parse.quote_plus(DB_NAME)
-    db_url = f'mongodb://{u}:{p}@localhost:27018/'
+u = parse.quote_plus(os.environ.get(USER_ENV))
+p = parse.quote_plus(os.environ.get(PW_ENV))
+host = parse.quote_plus(os.environ.get(HOST_ENV))
+port = parse.quote_plus(os.environ.get(PORT_ENV))
+db_url = f'mongodb://{u}:{p}@{host}:{port}/'
 
 
 # initialize
