@@ -1,0 +1,45 @@
+version: '3.7'
+
+services:
+  scrapyd:
+    image: junxin/scrapyd:v0.0.1
+    build:
+      dockerfile: Dockerfile
+      context: ./scrapyd
+    volumes:
+      - ${SCRAPYD_DATA_DIR}:/var/lib/scrapyd/:rw
+      - ${SCRAPYD_LOGS_DIR}:/root/logs:rw
+      - ${SCRAPYD_EGGS_DIR}:/root/eggs:rw
+      - ${SCRAPYD_DBS_DIR}:/root/dbs:rw
+      - ${SCRAPYD_ITEMS_DIR}:/root/items:rw
+      - ${SCRAPYD_CONFIG}:/etc/scrapyd/scrapyd.conf:rw
+    ports:
+      - "${SCRAPYD_HOST_PORT}:6800"
+    networks:
+      - default
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: "${MONGODB_INITDB_ROOT_USERNAME}"
+      MONGO_INITDB_ROOT_PASSWORD: "${MONGODB_INITDB_ROOT_PASSWORD}"
+      #depends_on:
+      #- mongodb
+    command: run.sh
+
+  scrapydweb:
+    build:
+      dockerfile: Dockerfile
+      context: ./scrapydweb
+    image: junxin/scrapydweb:v0.0.1
+    volumes:
+      - ${SCRAPYDWEB_DATA_PATH}:/scrapydweb_data:rw
+      - ${SCRAPYDWEB_CONFIG}:/src/scrapydweb_settings_v10.py:rw
+    ports:
+      - "${SCRAPYDWEB_HOST_PORT}:5000"
+    networks:
+      - default
+    environment:
+      USERNAME: ${SCRAPYDWEB_USERNAME}
+      PASSWORD: ${SCRAPYDWEB_PASSWORD}
+      SCRAPYD_SERVER: ${SCRAPYDWEB_SCRAPYD_SERVER}
+    depends_on:
+      - scrapyd
+    command: scrapydweb
