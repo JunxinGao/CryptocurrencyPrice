@@ -22,7 +22,6 @@ class MxcSpider(scrapy.Spider):
 
     def parse(self, response):
         body = json.loads(response.body.decode())
-        logger.error(body.keys())
         code = body['code']
         data = body['data']
         self.logger.info(f"http status: {code}, data length: {len(data)}")

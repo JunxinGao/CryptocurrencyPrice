@@ -6,14 +6,13 @@
 
 # useful for handling different item types with a single interface
 from itemadapter import ItemAdapter
+import copy
 from .utils import insert_mxc_market_tickers
 
 
-class ScrapyPipeline:
-    def process_item(self, item, spider):
-        return item
-
 class MxcPipeline:
     def process_item(self, item, spider):
-        results = insert_mxc_market_tickers(item['data'])
+        spider.logger.info(f"start insert {len(item['data'])} to mongodb")
+        results = insert_mxc_market_tickers(copy.deepcopy(item['data']))
+        spider.logger.info(f"insert end")
         return item

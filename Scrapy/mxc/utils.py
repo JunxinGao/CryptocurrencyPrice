@@ -35,5 +35,4 @@ db = client[DB_NAME]
 def insert_mxc_market_tickers(data):
     tb = db[TB_MARKET_TICKERS]
     result_insert = tb.insert_many(data)
-    logger.info(f"insert {len(data)} records")
     return result_insert
