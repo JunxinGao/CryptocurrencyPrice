@@ -20,6 +20,7 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: "${MONGODB_INITDB_ROOT_USERNAME}"
       MONGO_INITDB_ROOT_PASSWORD: "${MONGODB_INITDB_ROOT_PASSWORD}"
+      MONGO_INITDB_ROOT_HOST: "${MONGO_INITDB_ROOT_HOST}"
       #depends_on:
       #- mongodb
     command: run.sh
